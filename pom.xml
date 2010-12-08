@@ -1,0 +1,209 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>reconcile</groupId>
+  <artifactId>reconcile</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0.0</version>
+  <name>reconcile</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.3</version>
+    </dependency>
+
+<dependency>
+  <groupId>commons-logging</groupId>
+  <artifactId>commons-logging</artifactId>
+  <version>1.1.1</version>
+</dependency>
+    
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+<dependency>
+  <groupId>com.google.guava</groupId>
+  <artifactId>guava</artifactId>
+  <version>r06</version>
+</dependency>
+
+<dependency>
+  <groupId>de.schlichtherle.io</groupId>
+  <artifactId>truezip</artifactId>
+  <version>6.6</version>
+</dependency>
+
+<dependency>
+  <groupId>gov.llnl</groupId>
+  <artifactId>text-commons</artifactId>
+  <version>1.5.2</version>
+</dependency>
+	
+<dependency>
+	<groupId>PennParser</groupId>
+  <artifactId>MSTParser</artifactId>
+  <version>0.2</version>
+</dependency>
+
+<dependency>
+<groupId>opennlp</groupId>
+<artifactId>opennlp-tools</artifactId>
+<version>1.4.3</version>
+</dependency>
+	
+<dependency>
+<groupId>Stanford</groupId>
+<artifactId>NER</artifactId>
+<version>2009-01-16</version>
+</dependency>
+	
+
+<dependency>
+<groupId>Stanford</groupId>
+<artifactId>parser</artifactId>
+<version>2010-02-26</version>
+</dependency>
+
+<dependency>
+<groupId>Berkeley</groupId>
+<artifactId>parser</artifactId>
+<version>1.0.1</version>
+</dependency>
+
+<dependency>
+<groupId>jwnl</groupId>
+<artifactId>jwnl</artifactId>
+<version>1.4_rc3</version>
+</dependency>
+
+<!-- 
+<dependency>
+<groupId>reconcile</groupId>
+<artifactId>models</artifactId>
+<version>1.0.0</version>
+</dependency>
+-->
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+  
+  	<repositories>
+		<repository>
+			<id>OpenNLPRepository</id>
+			<url>http://opennlp.sourceforge.net/maven2</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/config</directory>
+			</resource>
+			<resource>
+				<directory>src/main/models</directory>
+			</resource>
+			
+		</resources>
+		<sourceDirectory>src/main</sourceDirectory>
+	</build>
+
+          <!-- 
+  
+  <build>
+		<plugins>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>make-uber-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		=========
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <executable> /usr/bin/javac</executable> 
+          <compilerVersion>1.5</compilerVersion>
+          <source>1.5</source>
+          <target>1.5</target> 
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+          -->
+  
+</project>
