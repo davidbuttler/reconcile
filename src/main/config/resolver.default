@@ -1,0 +1,124 @@
+##############################################
+# Global configuration
+#
+#
+##############################################
+SRC_DIR=.
+#BASE_DIR=uw-corpus
+RESOLUTION_MODE=true
+
+#TRAIN_DIR=${BASE_DIR}
+#TRAIN_FILELIST=${TRAIN_DIR}/train
+#TEST_DIR=${BASE_DIR}
+#TEST_FILELIST=${TEST_DIR}/test
+
+#VALID_DIR=${TRAIN_DIR}
+#VALID_FILELIST=${TRAIN_FILELIST}
+
+DATASET=uw
+
+RUN_DIR=${SRC_DIR}
+DATA_DIR=${RUN_DIR}/resources
+SCRIPT_DIR=${RUN_DIR}/scripts
+WORK_DIR=/models
+
+#Directory in which to save the log of the experiment
+RDIR=${SRC_DIR}/regression/scores
+RNAME=uw-user.rec
+
+GENERATE_VALID_FEATURES=false
+VALIDATE=false
+
+##################################################################################
+# Configuration of the preprocessing component
+# 
+# 	Preprocessing elements are configured as follows:
+#		PreprocessingElement.ElementPackage.Element=annotSet1,annotSet2
+#		means: Run preprocessor with name "Element" located in java package 
+#		"Element Package" (default is "FeatureExtractor") and save the 
+#		results in annotation sets (filenames) annotSet1, annotationSet2.
+#		Most preprocessing elemements produce only one annotation set.
+#
+##################################################################################
+OVERWRITE_FILES=true
+PREPROCESS=true
+#Specify what preprocessing components to be run and what is the annotation set name that each component produces
+
+PreprocessingElement.ParagraphSplitter=par
+PreprocessingElement.SentenceSplitterOpenNLP=sent
+PreprocessingElement.TokenizerOpenNLP=token
+PreprocessingElement.PosTaggerOpenNLP=postag
+PreprocessingElement.ParserBerkeleyParser=parse,dep
+PreprocessingElement.NamedEntityStanford=ne
+PreprocessingElement.CEExtractorUW=nps
+
+#NER models
+#stanfordnermodels = ner-eng-ie.crf-3-all2006, llnl_date_100
+
+##################################################################################
+# Configuration of the feature generation component
+#
+# 	The FeatureExtractor is configured as follows:
+#		AnnotationSet.SetName=annotSet
+#		which means: load and use annotaion set "annotSet" for the annotations
+#		"SetName". "SetName" is an internal constant to the system and 
+#		and is configured in class General.Constants
+#
+##################################################################################
+RUN_FEATURE_GENERATION=true
+#Specify what annotations are used in future generation
+AnnotationSet.Sentence=sent
+AnnotationSet.Paragraph=par
+AnnotationSet.PartOfSpeach=postag
+AnnotationSet.Token=token
+AnnotationSet.Parse=parse
+AnnotationSet.Dependency=dep
+#AnnotationSet.OriginalMarkup=key
+AnnotationSet.MarkableNP=nps
+#AnnotationSet.GS_CEs=key
+AnnotationSet.NamedEntities=ne
+
+##############################################
+# Names of the features that are being used
+##############################################
+FEAT_SET_NAME=development
+FEATURE_NAMES=DocNo, ID1, ID2, SoonStr, ProStr, ProComp, PNStr, WordsStr, WordOverlap, Modifier, PNSubstr, WordsSubstr
+FEATURE_NAMES=Pronoun1, Pronoun2, Definite1, Definite2, Demonstrative2, Embedded1, Embedded2, InQuote1, InQuote2
+FEATURE_NAMES=BothProperNouns, BothEmbedded, BothInQuotes, BothPronouns
+FEATURE_NAMES=BothSubjects, Subject1, Subject2, Appositive, MaximalNP
+FEATURE_NAMES=Animacy, Gender, Number, SentNum, ParNum, Alias, IAntes, Span, Binding, Contraindices, Syntax, ClosestComp
+FEATURE_NAMES=Indefinite, Indefinite1, Prednom, Pronoun, ContainsPN, Constraints, ProperNoun, Agreement, ProperName
+FEATURE_NAMES=WordNetClass, WordNetDist, WordNetSense, Subclass, AlwaysCompatible, RuleResolve
+FEATURE_NAMES=SameSentence, ConsecutiveSentences
+FEATURE_NAMES=WNSynonyms, Quantity
+FEATURE_NAMES=ProResolve
+FEATURE_NAMES=SameParagraph, HeadMatch, PairType, instClass
+
+#####################
+# when generating prediction pairs, what class should be used to generate the pairs
+# known pair generators: AllPairs, SmartInstanceGenerator, SoonInstanceSelection
+#####################
+INSTANCE_GENERATOR=SmartInstanceGenerator
+
+############################################################################
+# Configuration of the learning component
+#	Specifies whether training is to be run, what classifier is to be 
+#	used and what are the options for the classifier.
+############################################################################
+MODEL_NAME=aveperceptron.uw
+TRAIN=true
+CLASSIFIER=PerceptronM
+ClOptions.PerceptronM=-I, 15, -M, 5
+
+############################################################################
+# Configuration of the testing component
+#	Specifies whether testing is to be run, the options for the classifier (specified in the previous section) 
+#	and what clusterer and options to be run.
+############################################################################
+TEST=true
+TESTER.RUN_CLASSIFIER=true
+
+CLUSTERER=SingleLink
+ClustOptions.THRESHOLD=0.45
+
+SCORERS=BCubedScore, CEAFScore, KrippAlpha, MUCScore
